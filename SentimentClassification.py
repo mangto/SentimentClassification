@@ -42,7 +42,7 @@ class Analyzer:
 
         return freq
     
-    def tokenzie(self, text:str) -> list: # 토큰화: 문장을 형태소 기준으로 쪼갬
+    def tokenize(self, text:str) -> list: # 토큰화: 문장을 형태소 기준으로 쪼갬
         analyzed = self.kiwi.tokenize(text)
         analyzed_ = []
         for t in analyzed:
@@ -63,7 +63,7 @@ class Analyzer:
     def analyze(self, text:str, STD_Threshold:float=0.001) -> np.ndarray:
 
         # 토큰화
-        tokenized = self.tokenzie(text)
+        tokenized = self.tokenize(text)
 
         frequency = np.zeros((7, ))
 
