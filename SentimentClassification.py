@@ -66,11 +66,17 @@ class Analyzer:
         tokenized = self.tokenize(text)
 
         frequency = np.zeros((7, ))
+
+        # 단어별 빈도를 크기순으로 정렬함
+        totalfreqs = [self.total_frequency.get(t, float('inf')) for t in tokenized]
+        totalfreqs = sorted(totalfreqs)
         
         # 단어별 빈도를 가져와서 합함
         # 기존에 없던 단어인 경우에는 모든 감정에 대해서 같은 값을 더함
         for token in tokenized:
-            frequency += Analyzer.softmax(self.get_frequency(token))
+            if token in self.total_frequency: totalfreq = totalfreqs.index(self.total_frequency[token])
+            else: totalfreq = float('inf')
+            frequency += Analyzer.softmax(self.get_frequency(token)) / (totalfreq + 1)
 
         # 행렬의 합을 1로 맞춰줌
         frequency = Analyzer.softmax(frequency)
